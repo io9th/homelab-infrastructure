@@ -38,7 +38,7 @@ Troubleshooting Note: If the route does not propagate correctly, it is necessary
 echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.d/99-tailscale.conf && sudo sysctl -p /etc/sysctl.d/99-tailscale.conf
 ```
 
-![Página inicial do FortiOS](homepage.png)
+![FortiOS homepage](homepage.png)
 
 
 
@@ -54,6 +54,8 @@ The traffic from Programmable Logic Controllers (PLCs) and sensors must be isola
 
 - Note: The lease time for a guest network (like an airport) is usually 1 hour due to high device turnover. In isolated industrial or corporate networks, devices are highly static. A longer lease time (7 days) is much more efficient as it reduces IP renewal broadcast traffic on the network.
 
+![Port2 settings](configport2.png)
+
 # 4. Rule Abstraction: Objects and Policies
 
 ## The Concept of Objects
@@ -68,6 +70,8 @@ In programming terms, a network Object works exactly like the #define directive 
 
 If the server IP changes, we only modify the central object, and all policies inherit the update automatically. I configured objects of type Subnet (for entire departments) and FQDN (Fully Qualified Domain Name, for external APIs).
 
+![Objects](objectadress.png)
+
 ## Firewall Policies 
 
 Packet flow through a firewall can be understood as a sequential if/else structure, where the default case (else) is always an Implicit Deny.
@@ -81,6 +85,9 @@ An outbound policy (LAN -> WAN) was created with the following parameters:
 **Services:** HTTP, HTTPS, DNS, ALL_ICMP (Restricted specifically to outbound traffic, allowing ping tests without exposing the internal network to external scanning).
 
 **NAT:** Enabled. The private LAN IP is masked (Network Address Translation) by the WAN interface IP to enable external routing.
+
+![Politcs](politicas.png)
+
 
 # 5. Visibility and CLI Syntax (FortiOS)
 
@@ -106,3 +113,5 @@ Understanding the syntax:
 `end:` Saves all changes and exits the configuration tree entirely.
 
 With this adjustment, it was possible to audit the entire lifecycle of the packets in the local traffic log, successfully validating the correct routing and the dropping of unwanted connections.
+
+![Traffic](localtrafego.png)
