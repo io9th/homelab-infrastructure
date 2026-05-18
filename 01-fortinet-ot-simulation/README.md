@@ -93,12 +93,12 @@ end
 
 Understanding the syntax:
 
-`config: Enters the configuration "directory".
+`config:` Enters the configuration "directory".
 
-`edit: Selects a specific interface or item.
+`edit:` Selects a specific interface or item.
 
-`next: Saves the current configuration and returns to the previous level of the tree (equivalent to closing a code block scope).
+`next:` Saves the current configuration and returns to the previous level of the tree (equivalent to closing a code block scope).
 
-`end: Saves all changes and exits the configuration tree entirely.
+`end:` Saves all changes and exits the configuration tree entirely.
 
 With this adjustment, it was possible to audit the entire lifecycle of the packets in the local traffic log, successfully validating the correct routing and the dropping of unwanted connections.
