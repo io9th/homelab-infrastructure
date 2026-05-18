@@ -38,6 +38,10 @@ Troubleshooting Note: If the route does not propagate correctly, it is necessary
 echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.d/99-tailscale.conf && sudo sysctl -p /etc/sysctl.d/99-tailscale.conf
 ```
 
+![Página inicial do FortiOS](homepage.png)
+
+
+
 # 3. Logical Segmentation (LAN vs. WAN)
 
 The traffic from Programmable Logic Controllers (PLCs) and sensors must be isolated from the outbound internet network. Port 2 was configured as the internal network Gateway (OT LAN).
