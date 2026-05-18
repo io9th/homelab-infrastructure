@@ -1,1 +1,1 @@
-# homelab-infrastructure
+# 🔬 Security & Infrastructure Labs
