@@ -1,6 +1,6 @@
 # Proxmox on Constrained Hardware: Deploying a Cybersecurity Homelab
 
-##Context and Objective
+## Context and Objective
 
 This project started with a discarded Dell OptiPlex 9020. The hardware specifications were heavily constrained for virtualization purposes:
 
