@@ -70,7 +70,7 @@ In programming terms, a network Object works exactly like the #define directive 
 
 If the server IP changes, we only modify the central object, and all policies inherit the update automatically. I configured objects of type Subnet (for entire departments) and FQDN (Fully Qualified Domain Name, for external APIs).
 
-![Objects](objetadress.png)
+![Objects](objetcadress.png)
 
 ## Firewall Policies 
 
