@@ -15,10 +15,11 @@ qm importdisk [VM_ID] /path/fortios.qcow2 local-lvm
 
 VM Hardware Parameters: 1 Socket, 1 Core, 2048MB RAM, Network vmbr0 (VirtIO).
 
-Error Observation: Kernel Panic on Boot
+**Error Observation:** Kernel Panic on Boot
 On the first boot, the system hung indefinitely on the *"Formatting shared data partition"* process.
-Explanation: FortiOS has strict cryptography and hardware validation requirements that do not operate well with generic CPU masks.
-Resolution: Changed the processor type in the Proxmox UI from kvm64 to host. This exposes the actual CPU flags (Intel/AMD) to the VM, allowing the system to successfully format the disk.
+
+**Explanation:** FortiOS has strict cryptography and hardware validation requirements that do not operate well with generic CPU masks.
+**Resolution:** Changed the processor type in the Proxmox UI from kvm64 to host. This exposes the actual CPU flags (Intel/AMD) to the VM, allowing the system to successfully format the disk.
 
 # 2. Remote Access and Subnet Routing via Tailscale
 
@@ -41,13 +42,13 @@ echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.d/99-tailscale.conf && 
 
 The traffic from Programmable Logic Controllers (PLCs) and sensors must be isolated from the outbound internet network. Port 2 was configured as the internal network Gateway (OT LAN).
 
-Addressing Mode: Manual (Static IP). Critical infrastructure devices act as network references and cannot rely on dynamic IPs.
+**Addressing Mode:** Manual (Static IP). Critical infrastructure devices act as network references and cannot rely on dynamic IPs.
 
-DHCP Server: Enabled for the subnet.
+**DHCP Server:** Enabled for the subnet.
 
-Lease Time: Set to 7 days.
+**Lease Time:** Set to 7 days.
 
-Correlation: The lease time for a guest network (like an airport) is usually 1 hour due to high device turnover. In isolated industrial or corporate networks, devices are highly static. A longer lease time (7 days) is much more efficient as it reduces IP renewal broadcast traffic on the network.
+- Note: The lease time for a guest network (like an airport) is usually 1 hour due to high device turnover. In isolated industrial or corporate networks, devices are highly static. A longer lease time (7 days) is much more efficient as it reduces IP renewal broadcast traffic on the network.
 
 # 4. Rule Abstraction: Objects and Policies
 
@@ -63,18 +64,19 @@ In programming terms, a network Object works exactly like the #define directive 
 
 If the server IP changes, we only modify the central object, and all policies inherit the update automatically. I configured objects of type Subnet (for entire departments) and FQDN (Fully Qualified Domain Name, for external APIs).
 
-Firewall Policies (The conditional logic)
+## Firewall Policies 
+
 Packet flow through a firewall can be understood as a sequential if/else structure, where the default case (else) is always an Implicit Deny.
 
 An outbound policy (LAN -> WAN) was created with the following parameters:
 
-Source: LAN_OT Object
+**Source:** LAN_OT Object
 
-Destination: ALL
+**Destination:** ALL
 
-Services: HTTP, HTTPS, DNS, ALL_ICMP (Restricted specifically to outbound traffic, allowing ping tests without exposing the internal network to external scanning).
+**Services:** HTTP, HTTPS, DNS, ALL_ICMP (Restricted specifically to outbound traffic, allowing ping tests without exposing the internal network to external scanning).
 
-NAT: Enabled. The private LAN IP is masked (Network Address Translation) by the WAN interface IP to enable external routing.
+**NAT:** Enabled. The private LAN IP is masked (Network Address Translation) by the WAN interface IP to enable external routing.
 
 # 5. Visibility and CLI Syntax (FortiOS)
 
